@@ -1,34 +1,24 @@
-name: Mi Primer Pipeline CI/CD
+name: Ejecutar mi script de Python
 
-# 1. DISPARADOR (Trigger): Define cuándo se ejecuta el pipeline
 on:
   push:
-    branches: [ "main" ] # Se ejecuta cuando envías código a la rama main
-  pull_request:
-    branches: [ "main" ] # Se ejecuta al abrir una Pull Request a main
+    branches: [ "main" ]
 
-# 2. JOBS: Las tareas independientes a realizar
 jobs:
-  construir-y-probar:
-    # Sistema operativo virtual donde se ejecutará
+  ejecutar-python:
     runs-on: ubuntu-latest
 
-    # Pasos que ejecutará en secuencia
     steps:
-      # Paso 1: Descarga el código del repositorio a la máquina virtual
-      - name: Descargar el código
+      # 1. Copia tu código desde el repositorio a la máquina virtual
+      - name: Descargar repositorio
         uses: actions/checkout@v4
 
-      # Paso 2: Simular instalación de dependencias o configuración
-      - name: Configurar entorno
-        run: echo "Configurando el entorno de prueba..."
+      # 2. Prepara Python en la máquina virtual
+      - name: Configurar entorno de Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
 
-      # Paso 3: Simular ejecución de pruebas automáticas
-      - name: Ejecutar pruebas unitarias
-        run: |
-          echo "Corriendo pruebas..."
-          echo "¡Todas las pruebas pasaron correctamente!"
-
-      # Paso 4: Simular el despliegue
-      - name: Desplegar aplicación
-        run: echo "Desplegando la aplicación en producción..."
+      # 3. EJECUTA TU SCRIPT REAL
+      - name: Ejecutar script main.py
+        run: python main.py
